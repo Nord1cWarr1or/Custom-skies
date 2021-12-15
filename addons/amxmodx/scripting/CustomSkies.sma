@@ -38,7 +38,7 @@ ReadConfig()
 
     if(!iFilePointer)
     {
-        set_fail_state("File <%s> is missing or not enough rights!", szConfigFile);
+        set_fail_state("Unable to open file <%s>.", szConfigFile);
         return;
     }
 
@@ -59,13 +59,14 @@ ReadConfig()
             ArrayPushString(g_aListOfSkies, szBuffer);
         }
     }
+
     fclose(iFilePointer);
 
     g_iArraySkiesSize = ArraySize(g_aListOfSkies);
 
     if(!g_iArraySkiesSize)
     {
-        set_fail_state("File <%s> is empty or incorrect!", szConfigFile);
+        set_fail_state("File <%s> is empty or incorrect.", szConfigFile);
     }
 }
 
@@ -86,10 +87,11 @@ CheckAndPrecacheFiles(szFileName[])
         }
         else
         {
-            log_amx("File <%s> is missing!", szFilePath);
+            log_amx("File <%s> is missing.", szFilePath);
             break;
         }
     }
+
     return bFileExists;
 }
 
