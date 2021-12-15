@@ -1,7 +1,7 @@
 #include <amxmodx>
 #include <amxmisc>
 
-new const PLUGIN_VERSION[] = "0.0.1";
+new const PLUGIN_VERSION[] = "0.1.0";
 
 #define MAX_SKY_NAME_LENGTH 32
 
@@ -87,8 +87,26 @@ CheckAndPrecacheFiles(szFileName[])
         }
         else
         {
-            log_amx("File <%s> is missing.", szFilePath);
-            break;
+            new szType[3];
+            new szUpperFilePatch[MAX_RESOURCE_PATH_LENGTH];
+
+            copy(szType, charsmax(szType), g_szTypeOfSky[i]);
+            strtoupper(szType);
+
+            formatex(szUpperFilePatch, charsmax(szUpperFilePatch), "gfx/env/%s%s.tga", szFileName, szType);
+
+            bFileExists = bool:file_exists(szUpperFilePatch);
+
+            if(bFileExists)
+            {
+                rename_file(szUpperFilePatch, szFilePath, .relative = true);
+                precache_generic(szFilePath);
+            }
+            else
+            {
+                log_amx("File <%s> is missing.", szFilePath);
+                break;
+            }
         }
     }
 
