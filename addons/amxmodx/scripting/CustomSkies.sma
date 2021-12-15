@@ -98,8 +98,9 @@ CheckAndPrecacheFiles(szFileName[])
 SetRandomSky()
 {
     new iRandomNumberSky = random(g_iArraySkiesSize);
-
     ArrayGetString(g_aListOfSkies, iRandomNumberSky, g_szSkyName, charsmax(g_szSkyName));
 
     server_cmd("sv_skyname %s", g_szSkyName);
+
+    log_amx("Current skybox: <%s>", g_szSkyName);
 }
